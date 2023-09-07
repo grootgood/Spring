@@ -1,5 +1,8 @@
 package org.galapagos.config;
 
+import javax.servlet.Filter;
+
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -20,4 +23,12 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 		// TODO Auto-generated method stub
 		return new String[] { "/" };
 	}
+	
+	@Override
+    protected Filter[] getServletFilters() {
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+        return new Filter[] {characterEncodingFilter};
+    }
 }
