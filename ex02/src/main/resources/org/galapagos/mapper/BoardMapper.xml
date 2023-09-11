@@ -10,5 +10,36 @@
 		select * from tbl_board
 		]]>
 	</select>
+	
+	<insert id="insert">
+		insert into tbl_board (title, content, writer)
+		values (#{title}, #{content}, #{writer})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		insert into tbl_board (title, content, writer)
+		values (#{title}, #{content}, #{writer})
+		
+		<selectKey resultType="Long" keyProperty="bno" keyColumn="bno" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>		
+	</insert>
+	
+	<select id="read" resultType="org.galapagos.domain.BoardVO">
+		select * from tbl_board where bno = #{bno}
+	</select>
+	
+	<delete id="delete">
+		delete from tbl_board where bno = #{bno}
+	</delete>
+	
+	<update id="update">
+		update tbl_board 
+		set title =#{title},
+			content = #{content},
+			writer = #{writer},
+			update_date = now()
+		where bno = #{bno}
+	</update>
 
 </mapper>

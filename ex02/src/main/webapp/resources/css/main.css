@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+
+* {
+	font-family: 'Gowun Batang'
+}
+
+.avatar-sm {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+}
+
+.jumbotron {
+	background-image: url('/resources/images/car.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	color: white;
+}
