@@ -23,6 +23,7 @@
 			<td>${board.bno }</td>
 			<td>
 				<a href="get?bno=${board.bno }">${board.title}</a>
+				<!-- 상대경로이기 때문에 실제 클릭시 요청되는 주소는 /board/get?bno=xxx 이다.-->
 			</td>
 			<td>${board.writer}</td>
 			<td>
@@ -35,6 +36,7 @@
 
 <div class="text-right">
 	<a href="register" class="btn btn-primary">
+	<!-- 상대경로이기 때문에 실제 클릭시 요청되는 주소는 /board/register이다.  -->
 		<i class="far fa-edit"></i>
 		글쓰기
 	</a>

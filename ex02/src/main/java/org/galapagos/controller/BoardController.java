@@ -1,6 +1,7 @@
 package org.galapagos.controller;
 
 import org.galapagos.domain.BoardVO;
+import org.galapagos.domain.Criteria;
 import org.galapagos.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +23,10 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/list")
-	public void list(Model model) {
+	public void list(Criteria cri, Model model) {
 		
-		log.info("list");
-		model.addAttribute("list", service.getList());
+		log.info("list: "+cri);
+		model.addAttribute("list", service.getList(cri));
 	}
 	// return 타입이 void이기 때문에 view 이름 : board/list 이다.
 	// 앞에 / 붙지 않는다.
@@ -61,8 +62,11 @@ public class BoardController {
 		
 		if(service.modify(board)) {
 			rttr.addFlashAttribute("result", "success");
+			// Flash --> 1회성으로 정보를 전달한다는 의미
+			rttr.addAttribute("bno", board.getBno());
+			rttr.addAttribute("name", "hong");
 		}
-		return "redirect:/board/list";
+		return "redirect:/board/get";
 	}
 	
 	@PostMapping("/remove")

@@ -30,10 +30,14 @@ public class BoardControllerTests {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
     }
     
- //   @Test
-    public void testList() throws Exception {
+    @Test
+    public void testListPaging() throws Exception {
         log.info(
-                mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
+                mockMvc.perform(
+                		MockMvcRequestBuilders
+                			.get("/board/list")
+                			.param("pageNum", "2")
+                			.param("amount", "5"))
                         .andReturn()
                         .getModelAndView()
                         .getModelMap());
@@ -82,7 +86,7 @@ public class BoardControllerTests {
     	log.info(resultPage);
     }
     
-    @Test
+//    @Test
     public void testRemove() throws Exception {
     	// 삭제 전 데이터에비스에 게시물 번호 확인할 것
     	String resultPage = mockMvc

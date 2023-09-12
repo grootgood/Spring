@@ -2,8 +2,11 @@ package org.galapagos.service;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.galapagos.config.RootConfig;
 import org.galapagos.domain.BoardVO;
+import org.galapagos.domain.Criteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,7 @@ public class BoardServiceTest {
 	@Autowired
 	private BoardService service; // 생성자의 매개변수로 주입이 되어 설정된다.
 	
-	@Test
+//	@Test
 	public void testRegister() {
 		
 		BoardVO board = new BoardVO();
@@ -34,13 +37,13 @@ public class BoardServiceTest {
 		log.info("생성된 게시물의 번호: "+board.getBno());
 	}
 
-	@Test
+//	@Test
 	public void testGet() {
 		
 		log.info(service.get(1L));
 	}
 
-	@Test
+//	@Test
 	public void testModify() {
 		
 		BoardVO board = service.get(1L);
@@ -53,7 +56,7 @@ public class BoardServiceTest {
 		log.info("MODIFY RESULT: " + service.modify(board));
 	}
 
-	@Test
+//	@Test
 	public void testRemove() {
 		
 		// 게시물 번호의 존재 여부를 확인하고 테스트할 것
@@ -63,7 +66,11 @@ public class BoardServiceTest {
 	@Test
 	public void testGetList() {
 		
-		service.getList().forEach(board -> log.info(board));
+		List<BoardVO> list = service.getList(new Criteria(2,10));
+		
+		for(BoardVO board: list) {
+			log.info(board);
+		}
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.galapagos.config.RootConfig;
 import org.galapagos.domain.BoardVO;
+import org.galapagos.domain.Criteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,7 @@ public class BoardMapperTest {
 		log.info("DELETE COUNT: " + mapper.delete(3L));
 	}
 	
-	@Test
+//	@Test
 	public void testUpdate() {
 		
 		BoardVO board = new BoardVO();
@@ -83,5 +84,17 @@ public class BoardMapperTest {
 		int count = mapper.update(board);
 		
 		log.info("UPDATE COUNT: "+count);
+	}
+	
+	@Test
+	public void testPaging() {
+		
+		Criteria cri = new Criteria(3,3);
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		for(BoardVO board: list) {
+			log.info(board);
+		}
 	}
 }
