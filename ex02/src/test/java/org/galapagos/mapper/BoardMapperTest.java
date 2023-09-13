@@ -31,17 +31,18 @@ public class BoardMapperTest {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void testInsert() {
 		
-		BoardVO board = new BoardVO();
-		board.setTitle("새로 작성하는 글");
-		board.setContent("새로 작성하는 내용");
-		board.setWriter("newbie");
-		
-		mapper.insert(board);
-		
-		log.info(board);
+			for(int i=0; i<260; i++) {
+			BoardVO board = new BoardVO();
+			board.setTitle("새로 작성하는 글");
+			board.setContent("새로 작성하는 내용");
+			board.setWriter("newbie" + i%10);
+			
+			mapper.insert(board);
+		}
+//		log.info(board);
 	}
 	
 //	@Test
@@ -86,7 +87,7 @@ public class BoardMapperTest {
 		log.info("UPDATE COUNT: "+count);
 	}
 	
-	@Test
+//	@Test
 	public void testPaging() {
 		
 		Criteria cri = new Criteria(3,3);
