@@ -25,7 +25,7 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/list")
-	public void list(Criteria cri, Model model) {
+	public void list(@ModelAttribute("cri") Criteria cri, Model model) {
 		
 		log.info("list: "+cri);
 		model.addAttribute("list", service.getList(cri));
@@ -73,10 +73,12 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 			// Flash --> 1회성으로 정보를 전달한다는 의미
 			rttr.addAttribute("bno", board.getBno());
-			rttr.addAttribute("pageNum", cri.getPageNum());
-			rttr.addAttribute("amount", cri.getAmount());
+			rttr.addAttribute("pageNum", cri.getPageNum()); //criteria에 있는 정보
+			rttr.addAttribute("amount", cri.getAmount()); //criteria에 있는 정보
+			rttr.addAttribute("type", cri.getType()); //criteria에 있는 정보
+			rttr.addAttribute("keyword", cri.getKeyword()); //criteria에 있는 정보
 		}
-		return "redirect:/board/get";
+		return "redirect:" + cri.getLinkWithBno("/board/get", board.getBno());
 	}
 	
 	@PostMapping("/remove")
@@ -87,8 +89,10 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 			rttr.addAttribute("pageNum", cri.getPageNum());
 			rttr.addAttribute("amount", cri.getAmount());
+			rttr.addAttribute("type", cri.getType());
+			rttr.addAttribute("keyword", cri.getKeyword());
 		}
-		return "redirect:/board/list"; // 테스트에서 확인
+		return "redirect:" + cri.getLink("/board/list"); // 테스트에서 확인
 	}
 	
 }

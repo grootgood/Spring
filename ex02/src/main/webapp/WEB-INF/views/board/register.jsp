@@ -42,8 +42,9 @@ $('#summernote').summernote('fontName','Arial');
 			<button type="submit" class="btn btn-primary">
 					<i class="fas fa-check"></i> 확인</button>
 			<button type="reset" class="btn btn-primary">
-					<i class="fas fa-undo"></i> 취소</button>		
-			<a href="list" class="btn btn-primary">
+					<i class="fas fa-undo"></i> 취소</button>	
+			<!-- 누르면 url링크로 보지말고 javascript 코드로 봐라 -->	
+			<a href="javascript:history.back()" class="btn btn-primary">
 					<i class="fas fa-list"></i> 목록</a>
 		</form>
 	</div>

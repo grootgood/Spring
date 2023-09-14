@@ -7,13 +7,13 @@
 <script>
 $(document).ready(function() {
 	
-	$('.list').click(function() {
+/* 	$('.list').click(function() {
 		document.forms.listForm.submit();
 	});
 	
 	$('.modify').click(function() {
 		document.forms.modifyForm.submit();
-	});
+	}); */
 	
 	$('.remove').click(function(){ // remove 클래스가 클릭 됐을 때 함수 호출 
 		// 클릭 이벤트 핸들러 함수
@@ -45,29 +45,35 @@ $(document).ready(function() {
 결과: ${result }
 
 <div class="mt-4">
-	<a href="#" class="btn btn-primary list">
+	<a href="${cri.getLink('list') }" class="btn btn-primary list">
 		<i class="fas fa-list"></i>목록</a>
-	<a href="#" class="btn btn-primary modify">
+	<a href="${cri.getLinkWithBno('modify', board.bno) }" class="btn btn-primary modify">
 		<i class="far fa-edit"></i>수정</a>
 	<a href="#" class="btn btn-danger remove">
 		<i class="fas fa-trash-alt"></i>삭제</a>	
 </div>
 
-<form id="listForm" action="/board/list" method="get">
+<%-- <form id="listForm" action="/board/list" method="get">
 	<input type="hidden" name="pageNum" value="${cri.pageNum }"/>
 	<input type="hidden" name="amount" value="${cri.amount }"/>
+	<input type="hidden" name="type" value="${cri.type }"/>
+	<input type="hidden" name="keyword" value="${cri.keyword }"/>
 </form>
 
 <form id="modifyForm" action="/board/modify" method="get">
 	<input type="hidden" id="bno" name="bno" value="${board.bno }"/>
 	<input type="hidden" name="pageNum" value="${cri.pageNum}"/>
 	<input type="hidden" name="amount" value="${cri.amount }"/>
-</form>
+	<input type="hidden" name="type" value="${cri.type }"/>
+	<input type="hidden" name="keyword" value="${cri.keyword }"/>
+</form> --%>
 
 <form action="remove" method="post" name="removeForm">
 	<input type="hidden" name="bno" value="${board.bno}"/>
 	<input type="hidden" name="pageNum" value="${cri.pageNum }"/>
 	<input type="hidden" name="amount" value="${cri.amount }"/>	
+	<input type="hidden" name="type" value="${cri.type }"/>
+	<input type="hidden" name="keyword" value="${cri.keyword }"/>
 </form>
 
 <%@ include file="../layouts/footer.jsp" %>

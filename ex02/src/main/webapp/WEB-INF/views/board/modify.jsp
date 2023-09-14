@@ -14,9 +14,9 @@ $(document).ready(function() {
 		lang: "ko-KR",  // 한글 설정
 	});
 	
-	$('.get').click(function() {
+/* 	$('.get').click(function() {
 		document.forms.getForm.submit();
-	});
+	}); */
 });
 
 // 기본 글꼴 설정
@@ -30,9 +30,10 @@ $('#summernote').summernote('fontName','Arial');
 	<div class="panel-heading">Board Modification</div>
 	<div class="panel-body">
 		<form role="form" method="post">
-			<input type="hidden" name="pageNum" value="${cri.pageNum }"/>
-			<input type="hidden" name="amount" value="${cri.amount}"/>
+<%-- 			<input type="hidden" name="pageNum" value="${cri.pageNum }"/>
+			<input type="hidden" name="amount" value="${cri.amount}"/> --%>
 			<input type="hidden" name="bno" value="${board.bno }">
+			
 			<div class="form-group">
 				<label>Title</label>
 				<input name="title" class="form-control" value="${board.title }">
@@ -51,16 +52,18 @@ $('#summernote').summernote('fontName','Arial');
 					<i class="fas fa-check"></i> 확인</button>
 			<button type="reset" class="btn btn-primary">
 					<i class="fas fa-undo"></i> 취소</button>		
-			<a href="#" class="btn btn-primary get">
+			<a href="${cri.getLinkWithBno('get', board.bno) }" class="btn btn-primary get">
 					<i class="fas fa-file-alt"></i> 돌아가기</a>
 		</form>
 	</div>
 </div>
 
-<form id="getForm" action="/board/get" method="get">
+<%-- <form id="getForm" action="/board/get" method="get">
 	<input type="hidden" id="bno" name="bno" value="${board.bno }"/>
 	<input type="hidden" name="pageNum" value="${cri.pageNum }"/>
 	<input type="hidden" name="amount" value="${cri.amount }"/>
-</form>
+	<input type="hidden" name="type" value="${cri.type }"/>
+	<input type="hidden" name="keyword" value="${cri.keyword }"/>
+</form> --%>
 
 <%@ include file="../layouts/footer.jsp" %>

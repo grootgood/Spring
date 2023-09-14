@@ -31,7 +31,7 @@ public class BoardMapperTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void testInsert() {
 		
 			for(int i=0; i<260; i++) {
@@ -91,6 +91,20 @@ public class BoardMapperTest {
 	public void testPaging() {
 		
 		Criteria cri = new Criteria(3,3);
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		for(BoardVO board: list) {
+			log.info(board);
+		}
+	}
+	
+	@Test
+	public void testSearch() {
+		Criteria cri = new Criteria(); // 디폴트 생성자이므로 pageNum=1, amount=10. 즉 첫번째 페이지
+		
+		cri.setKeyword("새로");
+		cri.setType("TC"); // 제목(T), 내용(C)에서 검색
 		
 		List<BoardVO> list = mapper.getListWithPaging(cri);
 		
