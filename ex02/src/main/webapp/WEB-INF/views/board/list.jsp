@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <%@include file="../layouts/header.jsp"%>
 
 <script src="/resources/js/search.js">
@@ -28,34 +29,6 @@
 	<i class="fas fa-list"></i> 게시글 목록
 </h1>
 
-<!-- d-flex는 원래는 블록이지만, 자식을 여러개 가지면 인라인 형태로 된다. -->
-<div class="d-flex justify-content-between align-items-center my=4">
-	<div class=" ">총 ${pageMaker.total }건 ( ${pageMaker.cri.pageNum }..${pageMaker.totalPage })
-	</div>
-	<div>
-		<form id="searchForm" method="get" class="d-flex">
-			<input type="hidden" name="pageNum" value="1"> <input
-				type="hidden" name="amount" value="${pageMaker.cri.amount }" /> <select
-				name="type" class="form-select rounded-0 ml-1">
-				<option value="" ${pageMaker.cri.type == null ? 'selected' : '' }>--검색대상선택--</option>
-				<option value="T" ${pageMaker.cri.type eq 'T' ? 'selected' : '' }>제목</option>
-				<option value="C" ${pageMaker.cri.type eq 'C' ? 'selected' : '' }>내용</option>
-				<option value="W" ${pageMaker.cri.type eq 'W' ? 'selected' : '' }>작성자</option>
-				<option value="TC" ${pageMaker.cri.type eq 'TC' ? 'selected' : '' }>제목+내용</option>
-				<option value="TW" ${pageMaker.cri.type eq 'TW' ? 'selected' : '' }>제목+작성자</option>
-				<option value="TWC" ${pageMaker.cri.type eq 'TWC' ? 'selected' : '' }>제목+내용+작성자</option>
-			</select>
-			<div class="input-group">
-				<input type="text" name="keyword" class="form-control rounded-0" 
-					value="${pageMaker.cri.keyword}"  /> <!-- 키워드 파트 복원 -->
-				<button type="submit" class="btn btn-success rounded-0">
-					<i class="fa-solid fa-magnifying-glass"></i> 검색
-				</button>
-			</div>
-		</form>
-	</div>
-</div>
-
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>
@@ -69,9 +42,9 @@
 		<c:forEach var="board" items="${list}">
 			<tr>
 				<td>${board.bno}</td>
-				<!-- 상세보기? -->
 				<td>
-					<a class="move" href="${cri.getLinkWithBno('get', board.bno)}">${board.title}</a>
+					<a class="move" href="${cri.getLinkWithBno('get', board.bno)}">
+						${board.title}</a>
 				</td>
 				<td>${board.writer}</td>
 				<td><fmt:formatDate pattern="yyyy-MM-dd"
