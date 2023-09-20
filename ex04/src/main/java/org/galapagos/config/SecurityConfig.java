@@ -1,13 +1,20 @@
 package org.galapagos.config;
 
+import javax.sql.DataSource;
+
+import org.galapagos.security.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import lombok.extern.log4j.Log4j;
 
@@ -24,6 +31,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{ // 부모 클�
 		return new BCryptPasswordEncoder();
 	}
 	
+	@Autowired
+	private DataSource dataSource;
+	
+	@Bean
+	public UserDetailsService customUserService() {
+		return new CustomUserDetailsService();
+	}
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth)
+					throws Exception {
+		
+		auth
+			.userDetailsService(customUserService())
+			.passwordEncoder(passwordEncoder());
+	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
@@ -41,10 +65,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{ // 부모 클�
 		http.logout()
 			.logoutUrl("/security/logout") // POST: 로그아웃 호출 url
 			.invalidateHttpSession(true) // 세션 invalidate
-			.deleteCookies("remember-me", "JSESSION-ID") // 삭제할 쿠키 목록
+			.deleteCookies("remember-me", "JSESSION-ID") // 삭제할 쿠키 목록, "remember-me"도 로그아웃 시 삭제
 			.logoutSuccessUrl("/security/logout"); // 로그아웃 이후 이동할 페이지. GET 요청에 대한 처리
+		
+		http.rememberMe()	// remember-me 기능 설정
+			.key("Galapagos") // 토큰 값을 암호화하는 키를 임의로 준다.
+			.tokenRepository(persistentTokenRepository())
+			.tokenValiditySeconds(7*24*60*60); // 7일
+	}
+	
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl(); // 테이블명과 구조를 알고있다고 가정함
+		repo.setDataSource(dataSource);
+		
+		return repo;
 	}
 
+/*
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception { // Authentication -> id, password 설정
 		
@@ -62,5 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{ // 부모 클�
 			.password("$2a$10$aHyvHOwjGtVPya3yODgQeeTaF2AyUd8yFe6eB.5GSTIebydu7SU4a")
 			.roles("MEMBER");
 	} 
+*/
 	
 }
+

@@ -9,13 +9,32 @@
 	</div>
 </c:if>
 
-<form action="/security/login" method="post">
+<form action="/security/login" method="post" style="width:500px" class="mx-auto"> <!-- "mx-auto"는 "margin : auto"라는 의미이다. -->
 	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
-	사용자 ID : 
-	<input type="text" name="username"/><br> <!-- name의 username은 정해져있어서 우리가 변경하지 못한다. -->
+	<div class="form-group">
+		<label for="username"><i class="fa-solid fa-user"></i> 사용자 ID :</label>
+		<input type="text" name="username" id="username" class="form-control"/><br>
+	</div>
 	
-	비밀번호 : 
-	<input type="password" name="password"/><br> <!-- name의 password 또한 정해져있어서 우리가 변경하지 못한다. -->
+	<div class="form-group">
+		<label for="password"><i class="fa-solid fa-lock"></i> 비밀번호 :</label>
+		<input type="password" name="password" id="password" class="form-control"/><br>
+	</div>
 
-	<input type="submit" value="로그인">
+	<div class="form-group form-check">
+		<label class="form-check-label">
+			<input class="form-check-input" type="checkbox" name="remember-me"> 로그인 유지
+		</label>
+	</div>
+	
+	<button type="submit" class="btn btn-primary btn-block">
+		<i class="fa-solid fa-right-to-bracket"></i>
+		로그인
+	</button>
+	
+	<button type="#" class="btn btn-primary btn-block">
+		<i class="fa-solid fa-user-plus"></i>
+		회원가입
+	</button>
+
 </form>

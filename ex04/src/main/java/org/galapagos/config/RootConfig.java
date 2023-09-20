@@ -47,4 +47,5 @@ public class RootConfig {
 		return (SqlSessionFactory) sqlSessionFactory.getObject();
 		// sqlSessionFactory.getObject() --> 빈 객체
 	}
+	
 }
