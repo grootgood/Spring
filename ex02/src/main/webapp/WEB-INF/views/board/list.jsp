@@ -29,6 +29,8 @@
 	<i class="fas fa-list"></i> 게시글 목록
 </h1>
 
+<%@ include file="../common/search_bar.jsp" %>
+
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>

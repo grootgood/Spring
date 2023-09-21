@@ -21,7 +21,7 @@
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item"><a class="nav-link" href="#"> <img
 					src="https://randomuser.me/api/portraits/men/12.jpg"
-					class="avatar-sm" /> diode
+					class="avatar-sm" /> diode 
 			</a></li>
 			<li class="nav-item"><a class="nav-link" href="#"> <i
 					class="fa-solid fa-right-from-bracket"></i> 로그아웃
