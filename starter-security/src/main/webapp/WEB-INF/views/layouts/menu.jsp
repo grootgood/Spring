@@ -36,11 +36,13 @@
 	<!-- 로그인 된 상태 -->
 	<sec:authorize access="isAuthenticated()">
 	<ul class="navbar-nav ml-auto">
+		<sec:authentication property="principal.username" var="username" />
+		<!-- 출력하지 말고 username이라는 scope에 저장하라는 뜻 -->
 		<li class="nav-item">
-			<a class="nav-link" href="#"> 
-				<img src="https://randomuser.me/api/portraits/men/12.jpg"
+			<a class="nav-link" href="/security/profile">
+				<img src="/security/avatar/sm/${username }" 
 						class="avatar-sm" /> 유저이름: 
-				<sec:authentication property="principal.username" />
+				${username }
 			</a>
 		</li>
 						

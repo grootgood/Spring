@@ -6,8 +6,9 @@
 
 <h1 style="text-align:center">회원 가입</h1>
 <div>
-	<form:form modelAttribute="member">
-		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+	<form:form modelAttribute="member" 
+			action="/security/signup?_csrf=${_csrf.token}"
+			enctype="multipart/form-data">
 		
 		<div class="form-group mx-auto" style="width:300px">
 			<form:errors path="username" cssClass="error" /><br>
@@ -32,6 +33,8 @@
 			<form:label path="email"> email:</form:label>
 			<form:input path="email" cssClass="form-control" />
 		</div>
+		
+		<input type="file" name="avatar"/>
 		
 		<div class="text-center mx-auto" style="width:300px">
 			<button type="submit" class="btn btn-primary">

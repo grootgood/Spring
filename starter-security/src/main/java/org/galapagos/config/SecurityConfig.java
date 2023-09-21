@@ -15,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import lombok.extern.log4j.Log4j;
 
@@ -50,13 +52,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{ // 부모 클�
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+		CharacterEncodingFilter filter = new CharacterEncodingFilter();
+		filter.setEncoding("UTF-8");
+		filter.setForceEncoding(true);
+		
+		http.addFilterBefore(filter, CsrfFilter.class); // 필터를 CsrfFilter 앞에 넣어라라는 설정
+		
 		http.authorizeRequests()
-			.antMatchers("/security/all").permitAll() // 이 url이 맞다면 모두에게 허용하겠다라는 설정
-			.antMatchers("/security/admin").access("hasRole('ROLE_ADMIN')") // 특정 역할에게만 허용
-			.antMatchers("/security/member").access("hasRole('ROLE_MEMBER')"); // 특정 역할에게만 허용
+			.antMatchers("/security/profile").authenticated(); // 이 url은 로그인 한 사용자만 허용
+//			.antMatchers("/security/all").permitAll() // 이 url이 맞다면 모두에게 허용하겠다라는 설정
+//			.antMatchers("/security/admin").access("hasRole('ROLE_ADMIN')") // 특정 역할에게만 허용
+//			.antMatchers("/security/member").access("hasRole('ROLE_MEMBER')"); // 특정 역할에게만 허용
 		
 		http.formLogin()
-			.loginPage("/security/login") // 우리가 처리해야한다. GET 요청에 대한 처리
+			.loginPage("/security/login?error=login_required") // 우리가 처리해야한다. GET 요청에 대한 처리
 			.loginProcessingUrl("/security/login") // security가 처리해준다. POST 요청에 대한 처리
 			// /security/login이 login.jsp의 action url이 된
 			.defaultSuccessUrl("/")
