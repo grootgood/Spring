@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<!-- snake 표기법을 CamelCase로 표기하는 것을 true로 설정하겠다라는 의미 -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+	
+		<!-- 이 패키지는 클래스명만 적겠다는 설정 -->
+	<typeAliases>
+		<package name="org.galapagos.domain" />
+	</typeAliases>
+	
+</configuration>
