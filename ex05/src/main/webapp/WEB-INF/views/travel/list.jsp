@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <%@ include file="../layouts/header.jsp" %>
 
@@ -30,11 +31,13 @@
 	</tbody>
 </table>
 
-<div class="text-right">
-	<a href="register" class="btn btn-primary"> <i class="far fa-edit"></i>
-		추가
-	</a>
-</div>
+<sec:authorize access="hasRole('ROLE_MANAGER')">
+	<div class="text-right">
+		<a href="register" class="btn btn-primary"> <i class="far fa-edit"></i>
+			추가
+		</a>
+	</div>
+</sec:authorize>
 
 <%@include file="../common/pagination.jsp" %>
 

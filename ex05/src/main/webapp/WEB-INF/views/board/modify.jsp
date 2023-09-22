@@ -29,18 +29,15 @@ $(document).ready(function() {
 <div class="panel panel-default">
 	<div class="panel-body">
 		<form:form modelAttribute="board" role="form">
+		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 			<form:hidden path="bno"/>
-			
+			<form:hidden path="writer"/>	
+					
 			<div class="form-group">
 				<form:label path="title">제목</form:label>
 				<form:input path="title" cssClass="form-control" />
 				<form:errors path="title" cssClass="error"/>
 			</div>		
-			<div class="form-group">
-				<form:label path="writer">작성자</form:label>
-				<form:input path="writer" cssClass="form-control" />
-				<form:errors path="writer" cssClass="error"/>				
-			</div>			
 			
 			<div class="form-group">
 				<form:label path="content">내용</form:label>

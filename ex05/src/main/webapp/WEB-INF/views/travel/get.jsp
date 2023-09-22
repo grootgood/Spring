@@ -43,13 +43,16 @@ $(document).ready(function() {
 <div class="mt-4">
 	<a href="${cri.getLink('list') }" class="btn btn-primary list">
 		<i class="fas fa-list"></i>목록</a>
-	<a href="${cri.getLink('modify')}&no=${travel.no}" class="btn btn-primary modify"> <!-- 수정 사항 있음 주의 -->
-		<i class="far fa-edit"></i>수정</a>
-	<a href="#" class="btn btn-danger remove">
-		<i class="fas fa-trash-alt"></i>삭제</a>	
+	<sec:authorize access="hasAnyRole('ROLE_MANAGER')">
+		<a href="${cri.getLink('modify')}&no=${travel.no}" class="btn btn-primary modify"> <!-- 수정 사항 있음 주의 -->
+			<i class="far fa-edit"></i>수정</a>
+		<a href="#" class="btn btn-danger remove">
+			<i class="fas fa-trash-alt"></i>삭제</a>	
+	</sec:authorize>
 </div>
 
 <form action="remove" method="post" name="removeForm">
+	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 	<input type="hidden" name="no" value="${travel.no}"/> <!-- 수정 사항 있음 주의 -->
 	<input type="hidden" name="pageNum" value="${cri.pageNum }"/>
 	<input type="hidden" name="amount" value="${cri.amount }"/>	

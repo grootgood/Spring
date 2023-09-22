@@ -4,16 +4,10 @@
 
 <%@ include file="../layouts/header.jsp" %>
 
+<script src="/resources/js/rest.js"></script>
+
 <script>
-$(document).ready(function() {
-	
-/* 	$('.list').click(function() {
-		document.forms.listForm.submit();
-	});
-	
-	$('.modify').click(function() {
-		document.forms.modifyForm.submit();
-	}); */
+$(document).ready(async function() {
 	
 	$('.remove').click(function(){ // remove 클래스가 클릭 됐을 때 함수 호출 
 		// 클릭 이벤트 핸들러 함수
@@ -23,6 +17,13 @@ $(document).ready(function() {
 		// console.log(document.forms); // document에 있는 form 목록 확인
 		document.forms.removeForm.submit();
 	}); 
+	
+	const bno = ${board.bno};
+	
+	const url = '/api/board/' + bno + '/comment';
+	let data = await rest_get(url);
+	console.log(data);
+	
 });
 </script>
 
@@ -47,28 +48,17 @@ $(document).ready(function() {
 <div class="mt-4">
 	<a href="${cri.getLink('list') }" class="btn btn-primary list">
 		<i class="fas fa-list"></i>목록</a>
-	<a href="${cri.getLinkWithBno('modify', board.bno) }" class="btn btn-primary modify">
-		<i class="far fa-edit"></i>수정</a>
-	<a href="#" class="btn btn-danger remove">
-		<i class="fas fa-trash-alt"></i>삭제</a>	
+		
+	<c:if test="${username == board.writer}">
+		<a href="${cri.getLinkWithBno('modify', board.bno) }" class="btn btn-primary modify">
+			<i class="far fa-edit"></i>수정</a>
+		<a href="#" class="btn btn-danger remove">
+			<i class="fas fa-trash-alt"></i>삭제</a>
+	</c:if>	
 </div>
 
-<%-- <form id="listForm" action="/board/list" method="get">
-	<input type="hidden" name="pageNum" value="${cri.pageNum }"/>
-	<input type="hidden" name="amount" value="${cri.amount }"/>
-	<input type="hidden" name="type" value="${cri.type }"/>
-	<input type="hidden" name="keyword" value="${cri.keyword }"/>
-</form>
-
-<form id="modifyForm" action="/board/modify" method="get">
-	<input type="hidden" id="bno" name="bno" value="${board.bno }"/>
-	<input type="hidden" name="pageNum" value="${cri.pageNum}"/>
-	<input type="hidden" name="amount" value="${cri.amount }"/>
-	<input type="hidden" name="type" value="${cri.type }"/>
-	<input type="hidden" name="keyword" value="${cri.keyword }"/>
-</form> --%>
-
 <form action="remove" method="post" name="removeForm">
+    <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 	<input type="hidden" name="bno" value="${board.bno}"/>
 	<input type="hidden" name="pageNum" value="${cri.pageNum }"/>
 	<input type="hidden" name="amount" value="${cri.amount }"/>	

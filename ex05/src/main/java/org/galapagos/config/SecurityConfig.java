@@ -59,11 +59,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{ // 부모 클�
 		
 		http.addFilterBefore(filter, CsrfFilter.class); // 필터를 CsrfFilter 앞에 넣어라라는 설정
 		
+		http.csrf().ignoringAntMatchers("/api/**");
+		
 		http.authorizeRequests()
 			.antMatchers("/security/profile").authenticated() // 이 url은 로그인 한 사용자만 허용
 			.antMatchers("/board/register",
 						 "/board/modify",
-						 "/board/remove").authenticated(); 
+						 "/board/remove").authenticated()
+			.antMatchers("/trave/register",
+						 "/travel/modify",
+						 "/travel/remove").access("hasRole('ROLE_MANAGER')");
+		
 //			.antMatchers("/security/all").permitAll() // 이 url이 맞다면 모두에게 허용하겠다라는 설정
 //			.antMatchers("/security/admin").access("hasRole('ROLE_ADMIN')") // 특정 역할에게만 허용
 //			.antMatchers("/security/member").access("hasRole('ROLE_MEMBER')"); // 특정 역할에게만 허용
