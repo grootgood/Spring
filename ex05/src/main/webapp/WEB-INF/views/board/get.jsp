@@ -7,10 +7,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="/resources/js/rest.js"></script>
 <script src="/resources/js/comment.js"></script>
+<script src="/resources/js/reply.js"></script>
 
 <script>
 // 댓글 기본 URL 상수 - 전역 상수
 const COMMENT_URL = '/api/board/${param.bno}/comment/'; // 작업의 편의를 위해 끝에 / 추가
+const REPLY_URL = '/api/board/${param.bno}/reply/';
 
 $(document).ready(async function() {
 	
@@ -43,6 +45,39 @@ $(document).ready(async function() {
 	
 	// 삭제 버튼 클릭
 	$('.comment-list').on('click', '.comment-delete-btn', deleteComment);
+	
+	// 답글 버튼 이벤트 핸들링
+	// 답글 추가 인터페이스 보이기
+	$('.comment-list').on('click', '.reply-add-show-btn', function (e) {
+		const el = $(this).closest('.comment');
+		showReplyAdd($(this), writer);
+	});
+	
+	// 답글 등록
+	$('.comment-list').on('click', '.reply-add-btn', function (e) {
+		addReply($(this), writer); // this는 확인 버튼
+	});
+	
+	// 답글 취소
+	$('.comment-list').on('click', '.reply-add-cancel-btn', cancelReply);
+	
+	// 답글 수정화면 보이기
+	$('.comment-list').on('click', '.reply-update-show-btn', function(e) {
+		showUpdateReply($(this));
+	});
+	
+	// 답글 수정 등록
+	// 답글 수정화면 보이기
+	$('.comment-list').on('click', '.reply-update', function(e) {
+		updateReply($(this));
+	});
+	
+	// 답글 수정 취소
+	$('.comment-list').on('click', '.reply-update-cancel', cancelReplyUpdate);
+	
+	// 답글 삭제
+	$('.comment-list').on('click', '.reply-delete-btn', deleteReply);
+	
 }); 
 </script>
 
