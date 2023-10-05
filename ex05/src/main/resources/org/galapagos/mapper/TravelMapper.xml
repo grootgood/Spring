@@ -67,5 +67,11 @@
 	<delete id="delete">
 		delete from travel where no = #{no}
 	</delete>
+	
+	<select id="getRandom" resultType="TravelVO">
+		select * from travel
+		order by rand()
+		limit #{count}
+	</select>
  
  </mapper>

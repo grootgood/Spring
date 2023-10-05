@@ -4,6 +4,12 @@
 
 <%@ include file="../layouts/header.jsp" %>
 
+<script 
+	src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js">
+</script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+
 <script>
 $(document).ready(function() {
 	
@@ -15,8 +21,48 @@ $(document).ready(function() {
 		// console.log(document.forms); // document에 있는 form 목록 확인
 		document.forms.removeForm.submit();
 	}); 
+	
+	// a 태그 5개(사진이 5장이므로)가 선택이 되고, 그것들을 FancyBox가 관리하도록 지정
+	Fancybox.bind('[data-fancybox="gallery"]', {
+		// options
+	});
+	
+	$('.sm-images > img').mouseenter(function() {
+		let src = $(this).attr('src');
+		$('.image-panel > img').attr('src', src);
+	});
 });
 </script>
+
+<style>
+	.thumb-images>a {
+	width: 20%;
+	}
+
+	.thumb-images img {
+	width: 100%;
+	height: 150px;
+	padding: 2px;
+	object-fit: cover;
+	}
+
+	.image-panel {
+	width: 300px;
+	height: 270px;
+	}
+	
+	.image-panel > img {
+	width: 300px;
+	height: 200px;
+	}
+	
+	.image-panel > .sm-images > img {
+	width: 20%;
+	height: 60px;
+	object-fit: cover;
+	cursor: pointer;
+	}
+</style>
 
 <h1 class="page-header"><i class="far fa-file-alt"></i> ${travel.title }</h1>
 
@@ -29,9 +75,24 @@ $(document).ready(function() {
 	</div>
 </div>
 
-<hr>
-<div>
+<div class="clearfix">
+	<div class="image-panel float-left mr-3">
+		<img src="${travel.image }"> 
+		<div class="sm-images mt-1 d-flex">
+			<c:forEach var="image" items="${travel.images }">
+				<img src="${image }">
+			</c:forEach>
+		</div>
+	</div>
 	${travel.description}
+</div>
+
+<div class="thumb-images my-5 d-flex">
+	<c:forEach var="image" items="${travel.images }" >
+		<a href ="${image}" data-fancybox="gallery">
+			<img src="${image}">
+		</a>
+	</c:forEach>
 </div>
 
 <div class="mt-4">
