@@ -22,6 +22,7 @@ public class TravelVO {
 	private String description;
 	private String address;
 	private String phone;
+	private String hearts;
 	
 	public String getImage() {
 		int i = new Random().nextInt(5) + 1;
@@ -35,4 +36,10 @@ public class TravelVO {
 		}
 		return list;
 	}
+	
+	public String getSummary() {
+		
+		return description.split("<br>")[0].replace("<p>", ""); // "br태그로 잘라서 첫 문장만 가져가겠다"
+	}
+	
 }

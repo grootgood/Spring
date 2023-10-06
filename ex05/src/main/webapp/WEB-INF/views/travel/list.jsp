@@ -8,7 +8,8 @@
 <h1><i class="fa-solid fa-plane-departure"></i>100대 관광지</h1>
 
 <%@ include file="../common/search_bar.jsp" %>
-
+<br>
+<%-- 
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>
@@ -30,6 +31,44 @@
 		</c:forEach>
 	</tbody>
 </table>
+--%>
+<style>
+.card-text {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.card-img-top {
+	height: 200px;
+	object-fit: cover;
+}
+</style>
+
+
+<div class="row">
+	<c:forEach var="travel" items="${list}">
+		<div class="col-sm-6 col-md-4 mb-3">
+			<div class="card" style="width: 100%">
+				<a href="${cri.getLink('get')}&no=${travel.no}">  <!-- 상세보기 가기 -->
+					<img class="card-img-top" src="${travel.image}" alt="${travel.title}">
+				</a>
+				<div class="card-body">
+					<h4 class="card-title">
+						<a href="${cri.getLink('get')}&no=${travel.no}"> <!-- 상세보기 가기 -->
+							${travel.title} 
+						</a>
+					</h4>
+					<a href="#" class="heart">
+						<i class="fa-regular fa-heart text-danger"></i>
+					</a>
+					${travel.hearts}
+					<p class="card-text">${travel.summary}</p>
+				</div>
+			</div>
+		</div>
+	</c:forEach>
+</div>
 
 <sec:authorize access="hasRole('ROLE_MANAGER')">
 	<div class="text-right">

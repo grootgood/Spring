@@ -18,7 +18,7 @@
 			<div class="input-group">
 				<form:input path="keyword" class="form-control rounded-0" />
 				<button type="submit" class="btn btn-success rounded-0">
-					<i class="fa-solid fa-magnifying-glass"></i> 검색
+					<i class="fa-solid fa-magnifying-glass"></i>
 				</button>
 			</div>
 		</form:form>
