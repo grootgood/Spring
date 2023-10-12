@@ -3,6 +3,7 @@ package org.galapagos.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
+import org.galapagos.domain.BoardAttachmentVO;
 import org.galapagos.domain.BoardVO;
 import org.galapagos.domain.Criteria;
 
@@ -23,4 +24,15 @@ public interface BoardMapper {
 	public int update(BoardVO board);
 	
 	public int getTotalCount(Criteria cri);
+	
+	public void insertAttachment(BoardAttachmentVO attach);
+	
+	// 목록 보여줄때 사용
+	public List<BoardAttachmentVO> getAttachmentList(Long bno);
+	
+	// Attachment 1개 얻기 (다운로드)
+	public BoardAttachmentVO getAttachment(Long no);
+	
+	// 삭제
+	public int removeAttachment(Long no);
 }
