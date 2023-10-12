@@ -1,5 +1,6 @@
 package org.galapagos.service;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.galapagos.domain.Criteria;
@@ -23,14 +24,25 @@ public class TravelServiceImpl implements TravelService {
 	}
 
 	@Override
-	public List<TravelVO> getList(Criteria cri) {
-		return mapper.getList(cri);
+	public List<TravelVO> getList(Criteria cri, Principal principal) {
+		List<TravelVO> list = mapper.getList(cri);
+		if(principal != null) {
+			List<Long> hearts = mapper.getHeartsList(principal.getName()); // username 추출
+			for(TravelVO travel: list) {
+				travel.setMyHeart(hearts.contains(travel.getNo()));
+			}
+		}
+		return list;
 	}
 
 	@Override
-	public TravelVO get(Long no) { 
-		// get에서 보통 조회수 처리를 한다.
-		return mapper.read(no);
+	public TravelVO get(Long no, Principal principal) { 
+		TravelVO travel = mapper.read(no);
+		if(principal != null) {
+			List<Long> hearts = mapper.getHeartsList(principal.getName());
+			travel.setMyHeart(hearts.contains(travel.getNo()));
+		}
+		return travel;
 	}
 
 	@Override
