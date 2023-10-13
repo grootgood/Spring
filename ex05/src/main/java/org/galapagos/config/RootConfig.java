@@ -10,6 +10,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -17,6 +20,8 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration // 설정 파일이니 스프링에게 분석하라는 어노테이션
 @ComponentScan(basePackages = {"org.galapagos.service", "org.galapagos.controller"}) // 어노테이션에서 {}는 배열을 의미
 @MapperScan(basePackages = {"org.galapagos.mapper"})
+@EnableAspectJAutoProxy
+@EnableTransactionManagement // 트랜잭션 매니저를 가동시키겠다.
 public class RootConfig {
 	
 	@Autowired
@@ -46,5 +51,12 @@ public class RootConfig {
 		sqlSessionFactory.setDataSource(dataSource());
 		return (SqlSessionFactory) sqlSessionFactory.getObject();
 		// sqlSessionFactory.getObject() --> 빈 객체
+	}
+	
+	@Bean
+	public DataSourceTransactionManager transactionManager() {
+		DataSourceTransactionManager manager = new DataSourceTransactionManager(dataSource());
+		
+		return manager;
 	}
 }
