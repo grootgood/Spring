@@ -95,6 +95,15 @@ $(document).ready(function() {
 	</c:forEach>
 </div>
 
+<div class="my-5">
+	<h4>주변 볼거리</h4>
+	<c:forEach var="local" items="${travel.locals}">
+		<div>
+			${local.placeName } / ${local.roadAddressName } / ${local.phone}
+		</div>
+	</c:forEach>
+</div>
+
 <div class="mt-4">
 	주소: ${travel.address}
 </div>
@@ -126,6 +135,15 @@ $(document).ready(function() {
 // GeoCode
 	
 	let geocoder = new kakao.maps.services.Geocoder();
+	
+	let locals = [
+		<c:forEach var="local" items="${travel.locals}" >
+			{
+				name: '${local.placeName}', coords: new kakao.maps.LatLng(${local.y}, ${local.x})
+			},
+		</c:forEach>
+	]
+	
 	let address = '${travel.address}';
 	
 	// 비동기 함수. 동기 함수의 실행이 끝나고 나서 callback 함수 호출
@@ -143,13 +161,20 @@ $(document).ready(function() {
 		  
 		  	let map = new kakao.maps.Map(mapContainer, mapOption); // 두번째 인자는 지도의 위치를 어디에 둘 것인지 설정
 			
-			let marker = new kakao.maps.Marker({
+/* 			let marker = new kakao.maps.Marker({
 				map: map,
 				position: coords
-			});
+			}); 
+*/			
+			for(let local of locals) {
+				let marker = new kakao.maps.Marker({
+					map: map,
+					position: local.coords
+				});
+			}
 			
 			// 지도의 중심을 결고값으로 받은 위치로 이동
-			// map.setCenter(coords);
+			 map.setCenter(coords);
 		} else {
 			alert('잘못된 주소입니다.');
 		}
